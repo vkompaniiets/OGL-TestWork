@@ -3,11 +3,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-// function autoPopulateMainCategory(next) {
-//     this.populate('mainCategory');
-//     next();
-//   }
-
 var CategorySchema = new Schema({
     name: {
         type: String,
@@ -19,10 +14,6 @@ var CategorySchema = new Schema({
         ref: 'category'
     }
 });
-
-// CategorySchema
-//   .pre('findOne', autoPopulateMainCategory)
-//   .pre('find', autoPopulateMainCategory);
 
 CategorySchema.statics = {
     get: function (query, callback) {
