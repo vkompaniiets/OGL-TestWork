@@ -1,43 +1,10 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var base = require('./entryModel');
 
-var RecipeSchema = new Schema({
-    name: {
-        type: String,
-        unique: true,
-        required: true
-    },
-    text: {
-        type: String,
-        default: 'coming soon'
-    },
-    category: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'category'
-    }
-});
-
-RecipeSchema.statics = {
-    get: function (query, callback) {
-        this.findOne(query, callback);
-    },
-    getAll: function (query, callback) {
-        this.find(query, callback);
-    },
-
-    updateById: function (id, updateData, callback) {
-        this.update(id, { $set: updateData }, callback);
-    },
-    removeById: function (removeData, callback) {
-        this.remove(removeData, callback);
-    },
-    create: function (data, callback) {
-        var recipe = new this(data);
-        recipe.save(callback);
-    }
-};
+// In the future, new fields can be added. Save in 'recipe' collections, not in 'entry' (or 'article').
+var RecipeSchema = new base({ });
 
 var recipe = mongoose.model('recipe', RecipeSchema);
 
