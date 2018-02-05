@@ -2,6 +2,8 @@
 
 var mongoose = require('mongoose');
 var MpathPlugin = require('mongoose-mpath');
+var recipe = require('./recipe').Recipe;
+var article = require('./article').Article;
 var Schema = mongoose.Schema;
 
 var CategorySchema = new Schema({
@@ -28,18 +30,38 @@ CategorySchema.statics = {
     removeById: function (removeData, callback) {
         this.findOne(removeData, function (err, result) {
             if (!err && result) {
+                // raise the child in the hierarchy
                 category.find({ parent: removeData }, function (err, res) {
                     if (!err && res) {
-                        // raise the child in the hierarchy
                         res.forEach(function (item) {
                             item.parent = result.parent;
                             item.save();
                         });
-                        category.remove(removeData, callback);
-                    } else {
-                        category.remove(removeData, callback);
                     }
                 });
+                console.log('ss');
+                // if removable category is a recipe (or article) category
+                recipe.find({ category: removeData }, function (err, res) {
+                    console.log('recipe');
+                    console.log(res);
+                    // change category for child
+                    res.forEach(function (item) {
+                        item.category = result.parent;
+                        item.save();
+                    });
+                });
+                console.log('aa');
+                article.find({ category: removeData }, function (err, res) {
+                    console.log('article');
+                    console.log(res);
+                    // change category for child
+                    res.forEach(function (item) {
+                        item.category = result.parent;
+                        item.save();
+                    });
+                });
+                
+                category.remove(removeData, callback);
             } else {
                 category.remove(removeData, callback);
             }
