@@ -1,6 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var MpathPlugin = require('mongoose-mpath');
 var Schema = mongoose.Schema;
 
 var CategorySchema = new Schema({
@@ -8,12 +9,10 @@ var CategorySchema = new Schema({
         type: String,
         unique: true,
         required: true
-    },
-    mainCategory: {
-        type: Schema.Types.ObjectId,
-        ref: 'category'
     }
 });
+
+CategorySchema.plugin(MpathPlugin);
 
 CategorySchema.statics = {
     get: function (query, callback) {
@@ -31,7 +30,11 @@ CategorySchema.statics = {
         this.remove(removeData, callback);
     },
     create: function (data, callback) {
-        var category = new this(data);
+        console.log(data);
+        var category = new this({ 
+            name: data.name,
+            mainCategory: data.mainCategory,
+            parent: data.mainCategory });
         category.save(callback);
     }
 };
