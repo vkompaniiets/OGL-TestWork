@@ -25,9 +25,25 @@ CategorySchema.statics = {
     updateById: function (id, updateData, callback) {
         this.update(id, { $set: updateData }, callback);
     },
-    // TODO: delete tree
     removeById: function (removeData, callback) {
-        this.remove(removeData, callback);
+        this.findOne(removeData, function (err, result) {
+            if (!err && result) {
+                category.find({ parent: removeData }, function (err, res) {
+                    if (!err && res) {
+                        // raise the child in the hierarchy
+                        res.forEach(function (item) {
+                            item.parent = result.parent;
+                            item.save();
+                        });
+                        category.remove(removeData, callback);
+                    } else {
+                        category.remove(removeData, callback);
+                    }
+                });
+            } else {
+                category.remove(removeData, callback);
+            }
+        });
     },
     create: function (data, callback) {
         console.log(data);
