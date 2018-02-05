@@ -45,20 +45,24 @@ CategorySchema.statics = {
                     console.log('recipe');
                     console.log(res);
                     // change category for child
-                    res.forEach(function (item) {
-                        item.category = result.parent;
-                        item.save();
-                    });
+                    if (!err && res) {
+                        res.forEach(function (item) {
+                            item.category = result.parent;
+                            item.save();
+                        });
+                    }
                 });
                 console.log('aa');
                 article.find({ category: removeData }, function (err, res) {
                     console.log('article');
                     console.log(res);
                     // change category for child
-                    res.forEach(function (item) {
-                        item.category = result.parent;
-                        item.save();
-                    });
+                    if (!err && res) {
+                        res.forEach(function (item) {
+                            item.category = result.parent;
+                            item.save();
+                        });
+                    }
                 });
                 
                 category.remove(removeData, callback);
