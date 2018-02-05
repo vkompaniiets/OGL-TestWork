@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 var base = require('./entryModel');
 
+// расширяем базовую запись полем "description" и создаём схему для статей
 var ArticleSchema = new base({
     description: {
         type: String,

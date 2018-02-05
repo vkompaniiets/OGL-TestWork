@@ -13,10 +13,13 @@ module.exports = function (router) {
             Recipe.findById(req.params.id, function (err, result) {
                 if (!err) {
                     if (result) {
+                        // находим категорию к которой пренадлежит рецепт
                         Category.findById(result.category, function (err, result2) {
                             if (!err) {
+                                // получаем всех предков
                                 result2.getAncestors({}, function (error, ancestors) {
                                     if (!error) {
+                                        // добавляем текущий рецепт и категорию в список
                                         ancestors.push(result2);
                                         ancestors.push(result);
                                         return res.json(ancestors);
@@ -50,6 +53,7 @@ module.exports = function (router) {
                             if (!err) {
                                 result2.getAncestors({}, function (error, ancestors) {
                                     if (!error) {
+                                        // добавляем текущую категорию и статью в список
                                         ancestors.push(result2);
                                         ancestors.push(result);
                                         return res.json(ancestors);
@@ -137,8 +141,10 @@ module.exports = function (router) {
         // по идентификатору категории возвращает полный перечень категорий, к которым относится указанный ресурс, в порядке вложенности;        
         Category.findById(req.params.id, function (err, result) {
             if (!err) {
+                // в найденной категории получаем её предков
                 result.getAncestors({}, function (error, ancestors) {
                     if (!error) {
+                        // пихаем текущую категории в список
                         ancestors.push(result);
                         return res.json(ancestors);
                     } else {

@@ -16,6 +16,7 @@ var CategorySchema = new Schema({
     }
 });
 
+// Плагин для поиска вложенности категорий
 CategorySchema.plugin(MpathPlugin);
 
 CategorySchema.statics = {
@@ -51,7 +52,6 @@ CategorySchema.statics = {
                         });
                     }
                 });
-                console.log('aa');
                 article.find({ category: removeData }, function (err, res) {
                     // change category for child
                     if (!err && res) {

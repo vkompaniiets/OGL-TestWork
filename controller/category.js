@@ -15,7 +15,7 @@ exports.create = function (req, res) {
 
 exports.get = function (req, res) {
     var id = req.params.id;
-
+    // проверяем правильный ли передан id, если нет - сообщаем об этом
     if (!Id.isValid(id)) {
         res.status(422);
         return res.send('Invalid ID');

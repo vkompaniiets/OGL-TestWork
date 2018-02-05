@@ -1,11 +1,12 @@
 'use strict';
+
 var Id = require('valid-objectid');
 var category = require('../models/category').Category;
+
 module.exports = function (collectionName) {
     collectionName.Create = function (req, res) {
-        console.log(req.body);
         var id = req.body.category;
-
+        // проверяем id категории, к которой прицепим запись
         if (!Id.isValid(id)) {
             res.status(422);
             return res.send('Invalid ID');
