@@ -1,6 +1,7 @@
 'use strict';
 
 var Category = require('../models/category').Category;
+var Id = require('valid-objectid');
 
 exports.create = function (req, res) {
     Category.create(req.body, function (err, result) {
@@ -13,13 +14,20 @@ exports.create = function (req, res) {
 };
 
 exports.get = function (req, res) {
-    Category.get({ _id: req.params.id }, function (err, result) {
-        if (!err) {
-            return res.json(result);
-        } else {
-            return res.send(err);
-        }
-    });
+    var id = req.params.id;
+
+    if (!Id.isValid(id)) {
+        res.status(422);
+        return res.send('Invalid ID');
+    } else {
+        Category.get({ _id: req.params.id }, function (err, result) {
+            if (!err) {
+                return res.json(result);
+            } else {
+                return res.send(err);
+            }
+        });
+    }
 };
 
 exports.getAll = function (req, res) {
@@ -33,22 +41,36 @@ exports.getAll = function (req, res) {
 };
 
 exports.update = function (req, res) {
-    Category.updateById({ _id: req.params.id }, req.body, function (err, result) {
-        if (!err) {
-            return res.json(result);
-        } else {
-            return res.send(err);
-        }
-    });
+    var id = req.params.id;
+
+    if (!Id.isValid(id)) {
+        res.status(422);
+        return res.send('Invalid ID');
+    } else {
+        Category.updateById({ _id: req.params.id }, req.body, function (err, result) {
+            if (!err) {
+                return res.json(result);
+            } else {
+                return res.send(err);
+            }
+        });
+    }
 };
 
 exports.delete = function (req, res) {
-    Category.removeById({ _id: req.params.id }, function (err, result) {
-        if (!err) {
-            return res.json(result);
-        } else {
-            console.log(err);
-            return res.send(err);
-        }
-    });
+    var id = req.params.id;
+
+    if (!Id.isValid(id)) {
+        res.status(422);
+        return res.send('Invalid ID');
+    } else {
+        Category.removeById({ _id: req.params.id }, function (err, result) {
+            if (!err) {
+                return res.json(result);
+            } else {
+                console.log(err);
+                return res.send(err);
+            }
+        });
+    }
 };

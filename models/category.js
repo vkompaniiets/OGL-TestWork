@@ -10,7 +10,9 @@ var CategorySchema = new Schema({
     name: {
         type: String,
         unique: true,
-        required: true
+        required: [true, 'What is the category?'],
+        minlength: 3, 
+        maxlength: 64
     }
 });
 
@@ -39,11 +41,8 @@ CategorySchema.statics = {
                         });
                     }
                 });
-                console.log('ss');
                 // if removable category is a recipe (or article) category
                 recipe.find({ category: removeData }, function (err, res) {
-                    console.log('recipe');
-                    console.log(res);
                     // change category for child
                     if (!err && res) {
                         res.forEach(function (item) {
@@ -54,8 +53,6 @@ CategorySchema.statics = {
                 });
                 console.log('aa');
                 article.find({ category: removeData }, function (err, res) {
-                    console.log('article');
-                    console.log(res);
                     // change category for child
                     if (!err && res) {
                         res.forEach(function (item) {
@@ -72,7 +69,6 @@ CategorySchema.statics = {
         });
     },
     create: function (data, callback) {
-        console.log(data);
         var category = new this({ 
             name: data.name,
             mainCategory: data.mainCategory,

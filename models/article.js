@@ -6,7 +6,9 @@ var base = require('./entryModel');
 var ArticleSchema = new base({
     description: {
         type: String,
-        default: 'description'
+        default: 'description',
+        required: [true, 'Description required'],
+        minlength: 4, maxlength: 255
     }
 });
 

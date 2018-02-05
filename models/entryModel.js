@@ -9,15 +9,20 @@ module.exports = function (paths) {
         name: {
             type: String,
             unique: true,
-            required: true
+            required: [true, 'Need a name'],
+            minlength: 3, 
+            maxlength: 64
         },
         text: {
             type: String,
-            default: 'some text'
+            default: 'some text',
+            required: [true, 'This field required'],
+            minlength: 8, maxlength: 255
         },
         category: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'category'
+            ref: 'category',
+            required: [true, 'This field required']
         }
     });
 

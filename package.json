@@ -9,7 +9,8 @@
     "express": "^4.16.2",
     "mongodb": "^3.0.1",
     "mongoose": "^5.0.1",
-    "mongoose-mpath": "^1.0.2"
+    "mongoose-mpath": "^1.0.2",
+    "valid-objectid": "0.0.2"
   },
   "devDependencies": {
     "nodemon": "^1.14.11"
