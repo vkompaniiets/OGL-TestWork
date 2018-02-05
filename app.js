@@ -1,12 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-
 var db = require('./config/db');
-
-var routes = require('./routes/index');
-var recipe = require('./routes/recipe');
-var category = require('./routes/category');
-var article = require('./routes/article');
 
 var app = express();
 app.use(function(req,res,next){
@@ -22,6 +16,7 @@ require('./routes/recipe')(router);
 require('./routes/category')(router);
 require('./routes/article')(router);
 
+// return an error 404 if nothing is found on request
 router.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
@@ -30,5 +25,15 @@ router.use(function(req, res, next) {
 
 app.use(router);
 app.listen(3001);
-console.log('App started on port 3001')
+console.log('App started on port 3001');
 module.exports = app;
+
+
+/*
+Ваше ТЗ проверили и вот некоторые замечания:
+- 1) отсутствует валидация;
+- 2) отсутствует документация (ну или хоть какое-то описание);
+- 3) не продумано удаление элементов дерева (при удалении родителя либо удаляются дочерние элемент, либо они поднимаются на уровень удаляемого родителя);
+- 4) задание 3 выполнено самым медленным и неэффективным способом из всех возможных;
++ 5) вместо применения ООП просто дублирование кода (статьи и рецепты отличаются только набором параметров).
+*/

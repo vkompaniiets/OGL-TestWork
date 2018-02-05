@@ -1,4 +1,3 @@
-const async = require('async');
 var Article = require('../models/article').Article;
 var Recipe = require('../models/recipe').Recipe;
 var Category = require('../models/category').Category;

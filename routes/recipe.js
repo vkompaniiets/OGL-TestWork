@@ -1,9 +1,10 @@
-var Recipe = require('../controller/recipe');
+var recipe = require('../models/recipe').Recipe;
+require('../controller/entryModel')(recipe);
 
 module.exports = function (router) {
-    router.post('/recipe', Recipe.create),
-    router.get('/recipe/:id', Recipe.get),
-    router.get('/recipe', Recipe.getAll),
-    router.put('/recipe/:id', Recipe.update),
-    router.delete('/recipe/:id', Recipe.delete)
+    router.post('/recipe', recipe.Create),
+    router.get('/recipe/:id', recipe.Get),
+    router.get('/recipe', recipe.GetAll),
+    router.put('/recipe/:id', recipe.Update),
+    router.delete('/recipe/:id', recipe.Delete)
 };

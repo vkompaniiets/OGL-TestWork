@@ -26,6 +26,7 @@ CategorySchema.statics = {
     updateById: function (id, updateData, callback) {
         this.update(id, { $set: updateData }, callback);
     },
+    // TODO: delete tree
     removeById: function (removeData, callback) {
         this.remove(removeData, callback);
     },
